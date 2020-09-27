@@ -29,15 +29,20 @@ export GPG_ENCRYPT_ARCHIVE_RECIPIENT=me@example.com
 #+end_example
 ** Usage
 *** Encrypting a directory
-Provide the directory name to the lock script:
+In the example of a dir at =~/Documents/secret/=,
+provide the directory name to the lock script:
 #+begin_example bash
-lock ~/Documents/secret
+cd ~/Documents
+lock secret
 #+end_example
+The encrypted result will be at =~/Documents/secret.tgz.asc=
 *** Decrypting a locked archive
-Provide the directory name to the lock script:
+Provide the name of an encrypted archive in the current dir to the lock script:
 #+begin_example bash
-unlock ~/Documents/secret.tgz.asc
+cd ~/Documents
+unlock secret.tgz.asc
 #+end_example
+The unencrypted end result will be at =~/Documents/secret/=
 ** Features
 *** Tars directories
 GPG is a great tool for encrypting files.
