@@ -48,8 +48,8 @@ The unencrypted end result will be at =~/Documents/secret/=
 GPG is a great tool for encrypting files.
 However, if you want to encrypt directories, you will first have to tar the directory into a single file. This script tars the directory first and gets rid of the intermediary archive after it's no longer needed.
 *** Optionally removes source dir
-*** =shred= in favor of =rm=
+*** Shredding instead of removing
 To safely remove unencrypted data, =shred= is preferred over merely unlinking the file data with =rm=.
-*** =NODATACOW= on =btrfs= and comparable systems
+*** Prevents copy-on-write
 Just using =shred= is not enough on a /copy-on-write/ system like =btrfs=.
-This is why the files are decrypted into a directory marked as =NODATACOW=, to prevent previous versions of the decrypted data lingering in the file system.
+This is why the files are decrypted into a directory marked as =NODATACOW=, to prevent previous versions of the decrypted data lingering in the nether regions of the file system.
