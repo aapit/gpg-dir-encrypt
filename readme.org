@@ -1,0 +1,50 @@
+* Encrypt directories with GPG
+This script facilitates encrypting and decrypting directories.
+
+** Install
+*** Download
+Checkout or download the =.sh= files and place them somewhere on your drive.
+*** Make executable
+Make sure both scripts can be run:
+#+begin_example
+chmod +x /path/to/lock.sh
+chmod +x /path/to/unlock.sh
+#+end_example
+*** Alias
+In your startup script (like =~/.bash_profile=), create aliases to lock and unlock:
+#+begin_example
+alias lock=/path/to/lock.sh
+alias unlock=/path/to/unlock.sh
+#+end_example
+** Configuration
+*** Recipient
+The encrypted files can only be opened by a GPG identity indicated as /recipient/.
+Note: You won't be able to decrypt the archive if you cannot identify as the /recipient/ GPG identity.
+
+I mostly use my own GPG identity as recipient.
+You could use someone else's if you want to send them an encrypted archive only they can open.
+Set the recipient in your =~/.bash_profile=, or =~/.zprofile=:
+#+begin_example bash
+export GPG_ENCRYPT_ARCHIVE_RECIPIENT=me@example.com
+#+end_example
+** Usage
+*** Encrypting a directory
+Provide the directory name to the lock script:
+#+begin_example bash
+lock ~/Documents/secret
+#+end_example
+*** Decrypting a locked archive
+Provide the directory name to the lock script:
+#+begin_example bash
+unlock ~/Documents/secret.tgz.asc
+#+end_example
+** Features
+*** Tars directories
+GPG is a great tool for encrypting files.
+However, if you want to encrypt directories, you will first have to tar the directory into a single file. This script tars the directory first and gets rid of the intermediary archive after it's no longer needed.
+*** Optionally removes source dir
+*** =shred= in favor of =rm=
+To safely remove unencrypted data, =shred= is preferred over merely unlinking the file data with =rm=.
+*** =NODATACOW= on =btrfs= and comparable systems
+Just using =shred= is not enough on a /copy-on-write/ system like =btrfs=.
+This is why the files are decrypted into a directory marked as =NODATACOW=, to prevent previous versions of the decrypted data lingering in the file system.
